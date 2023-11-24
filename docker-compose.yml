@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    container_name: adberilgen-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: auth-db
+      MYSQL_USER: adberilgen
+      MYSQL_PASSWORD: deneme
+    ports:
+      - '3306:3306'
