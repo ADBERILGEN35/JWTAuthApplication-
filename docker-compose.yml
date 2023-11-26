@@ -11,4 +11,4 @@ services:
       MYSQL_USER: adberilgen
       MYSQL_PASSWORD: deneme
     ports:
-      - '3306:3306'
+      - '3307:3306'

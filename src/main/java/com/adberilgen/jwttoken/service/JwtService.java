@@ -22,7 +22,6 @@ public class JwtService {
 
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("oguzhan", "wia");
         return createToken(claims, userName);
     }
 
@@ -30,6 +29,16 @@ public class JwtService {
         String userName = extractUser(token);
         Date expirationDate = extractExpiration(token);
         return userDetails.getUsername().equals(userName) && expirationDate.after(new Date());
+    }
+
+    public String extractUser(String token) {
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
     }
 
     private Date extractExpiration(String token) {
@@ -42,15 +51,6 @@ public class JwtService {
         return claims.getExpiration();
     }
 
-    private String extractUser(String token) {
-        Claims claims = Jwts
-                .parserBuilder()
-                .setSigningKey(getSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
-    }
 
     private String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
